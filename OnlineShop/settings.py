@@ -122,6 +122,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Razorpay keys
 RAZORPAY_KEY_ID = 'rzp_test_RgQ7aqPF3uAVyp'
