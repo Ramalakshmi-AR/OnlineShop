@@ -1,0 +1,14 @@
+<h1>Checkout</h1>
+<h2>Total: ₹{{ total }}</h2>
+<form action="https://api.razorpay.com/v1/checkout/embedded" method="POST">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"
+        data-key="{{ razorpay_key }}"
+        data-amount="{{ payment.amount }}"
+        data-currency="INR"
+        data-order_id="{{ payment.id }}"
+        data-buttontext="Pay with Razorpay"
+        data-name="OnlineShop"
+        data-description="Test Payment"
+        data-theme.color="#F37254">
+    </script>
+</form>

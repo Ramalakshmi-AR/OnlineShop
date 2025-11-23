@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - OnlineShop</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>OnlineShop</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'cart' %}">Cart</a>
+        </nav>
+    </header>
+
+    <section class="product-detail">
+        <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-info">
+            <h2>{{ product.name }}</h2>
+            <p class="price">₹{{ product.price }}</p>
+            <p>{{ product.description }}</p>
+            <a href="{% url 'add_to_cart' product.id %}" class="btn-add-cart">Add to Cart</a>
+            <a href="{% url 'checkout' %}" class="btn-buy-now">Buy Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 OnlineShop. All rights reserved.</p>
+    </footer>
+</body>
+</html>
