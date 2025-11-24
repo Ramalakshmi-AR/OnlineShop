@@ -1,14 +1,181 @@
-<h1>Checkout</h1>
-<h2>Total: ₹{{ total }}</h2>
-<form action="https://api.razorpay.com/v1/checkout/embedded" method="POST">
-    <script src="https://checkout.razorpay.com/v1/checkout.js"
-        data-key="{{ razorpay_key }}"
-        data-amount="{{ payment.amount }}"
-        data-currency="INR"
-        data-order_id="{{ payment.id }}"
-        data-buttontext="Pay with Razorpay"
-        data-name="OnlineShop"
-        data-description="Test Payment"
-        data-theme.color="#F37254">
-    </script>
-</form>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Poppins, Arial;
+            background: #f5f5f5;
+        }
+
+        .checkout-container {
+            max-width: 500px;
+            margin: 70px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 18px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .total-box {
+            background: #f0fff4;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #c6f6d5;
+        }
+
+        .total-box h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #2f855a;
+        }
+
+        .pay-btn {
+            background: #2f855a;
+            color: white;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .pay-btn:hover {
+            background: #276749;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-btn a {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="{% url 'home' %}">OnlineShop</a>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                   <a class="nav-link" href="{% url 'products' %}">Products</a>
+
+                </li>
+                
+                
+
+                <!-- About -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+
+                <!-- Cart -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        Cart 
+                        <span class="badge bg-warning text-dark">
+                            {{ request.session.cart|length }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    </header>
+
+
+    <div class="checkout-container">
+
+        <h2>Checkout</h2>
+
+        <div class="total-box">
+            <h3>Total Amount: ₹{{ total }}</h3>
+        </div>
+
+        <!-- Razorpay Checkout Form -->
+        <form action="/payment-success/" method="POST">
+            {% csrf_token %}
+
+            <script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                data-key="{{ razorpay_key }}"
+                data-amount="{{ payment.amount }}"
+                data-currency="INR"
+                data-order_id="{{ payment.id }}"
+                data-buttontext="Pay Now"
+                data-name="OnlineShopping Store"
+                data-description="Order Payment"
+                data-theme.color="#38a169">
+            </script>
+
+            <button type="submit" class="pay-btn">Pay Now</button>
+        </form>
+
+        <div class="back-btn">
+            <a href="/cart/">← Back to Cart</a>
+        </div>
+    </div>
+<footer>
+        <p>&copy; 2025 OnlineShop. All rights reserved.</p>
+    </footer>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

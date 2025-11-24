@@ -8,14 +8,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - OnlineShop</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <h1>OnlineShop</h1>
-        <nav>
-            <a href="{% url 'home' %}">Home</a>
-        </nav>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="{% url 'home' %}">OnlineShop</a>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                   <a class="nav-link" href="{% url 'products' %}">Products</a>
+
+                </li>
+                
+                
+
+                <!-- About -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+
+                <!-- Cart -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        Cart 
+                        <span class="badge bg-warning text-dark">
+                            {{ request.session.cart|length }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
     </header>
+
 
     <section class="cart-section">
         <h2>Your Cart</h2>
@@ -48,8 +104,10 @@
         {% endif %}
     </section>
 
-    <footer>
+   <footer>
         <p>&copy; 2025 OnlineShop. All rights reserved.</p>
     </footer>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

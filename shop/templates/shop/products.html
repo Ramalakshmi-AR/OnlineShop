@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.name }} - OnlineShop</title>
+    <title>Products</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
+    <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
 </head>
 <body>
-     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ 
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="{% url 'home' %}">OnlineShop</a>
@@ -70,22 +73,42 @@
 
     </header>
 
-    <section class="product-detail">
-        <div class="product-image">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-        </div>
-        <div class="product-info">
-            <h2>{{ product.name }}</h2>
-            <p class="price">₹{{ product.price }}</p>
-            <p>{{ product.description }}</p>
-            <a href="{% url 'add_to_cart' product.id %}" class="btn-add-cart">Add to Cart</a>
-            <a href="{% url 'checkout' %}" class="btn-buy-now">Buy Now</a>
-        </div>
+    <section class="search-filter">
+        <form method="get" class="filter-form">
+            <input type="text" name="q" placeholder="Search products..." value="{{ request.GET.q }}">
+            <select name="category">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Search</button>
+        </form>
     </section>
 
-    <footer>
-        <p>&copy; 2025 OnlineShop. All rights reserved.</p>
-    </footer>
+
+    <section class="product-list">
+        {% if products %}
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <a href="{% url 'product_detail' product.slug %}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                        <h3>{{ product.name }}</h3>
+                    </a>
+                    <p class="price">₹{{ product.price }}</p>
+                    <a href="{% url 'add_to_cart' product.id %}" class="btn-add-cart">Add to Cart</a>
+                    <a href="{% url 'checkout' %}" class="btn-buy-now">Buy Now</a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No products found.</p>
+        {% endif %}
+    </section>
+
     <footer>
         <p>&copy; 2025 OnlineShop. All rights reserved.</p>
     </footer>

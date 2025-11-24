@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eceef4, #15aabf);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            row-gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: #fff;
+            width: 350px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #4c6ef5;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #4c6ef5;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #3b5bdb;
+        }
+
+        .extra {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .extra a {
+            color: #4c6ef5;
+            text-decoration: none;
+        }
+
+        .error {
+            color: #e03131;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="{% url 'home' %}">OnlineShop</a>
+
+        <!-- Mobile Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+
+
+                <li class="nav-item">
+                   <a class="nav-link" href="{% url 'products' %}">Products</a>
+
+                </li>
+                
+                
+
+                <!-- About -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About Us</a>
+
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+
+                <!-- Cart -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        Cart 
+                        <span class="badge bg-warning text-dark">
+                            {{ request.session.cart|length }}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    </header>
+
+
+    <div class="login-box">
+        <h2>Login</h2>
+        <div class="error" id="error-msg">Invalid username or password</div>
+        <form id="loginForm" onsubmit="return validateLogin()">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" required />
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" required />
+            </div>
+            <button class="btn">Login</button>
+        </form>
+        <div class="extra">
+            Don't have an account? <a href="#">Register</a>
+        </div>
+    </div>
+<footer>
+        <p>&copy; 2025 OnlineShop. All rights reserved.</p>
+    </footer>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "admin123") {
+                alert("Login Successful!");
+                return true;
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

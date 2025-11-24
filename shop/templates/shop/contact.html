@@ -1,16 +1,31 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ product.name }} - OnlineShop</title>
+    <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<style>
+    .content{
+        display:flex;
+        
+    }
+    .hero{
+        display: flex;
+        width: 60%;
+    }
+    .hero img{
+        width: 60%;
+        height:400px;
+    }
+    </style>
 </head>
 <body>
-     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="{% url 'home' %}">OnlineShop</a>
@@ -69,27 +84,23 @@
 </nav>
 
     </header>
+    <div class="content">
 
-    <section class="product-detail">
-        <div class="product-image">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <div class="hero">
+        <img src="{% static 'images/1.png' %}">
         </div>
-        <div class="product-info">
-            <h2>{{ product.name }}</h2>
-            <p class="price">₹{{ product.price }}</p>
-            <p>{{ product.description }}</p>
-            <a href="{% url 'add_to_cart' product.id %}" class="btn-add-cart">Add to Cart</a>
-            <a href="{% url 'checkout' %}" class="btn-buy-now">Buy Now</a>
-        </div>
-    </section>
 
-    <footer>
-        <p>&copy; 2025 OnlineShop. All rights reserved.</p>
-    </footer>
-    <footer>
+    <section id="contact-section" class="p-5 text-center bg-light">
+    <h2>Contact Us</h2>
+    <p>Email: support@onlineshop.com</p>
+    <p>Phone: +91 98765 43210</p>
+</section>
+</div>
+<footer>
         <p>&copy; 2025 OnlineShop. All rights reserved.</p>
     </footer>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
