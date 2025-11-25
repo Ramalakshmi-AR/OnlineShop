@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-g7lmo*!@kje0)4e-jj0@&-8ytzd&!z*#60d)jxxodfktb-a@&_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+
 
 
 
@@ -134,7 +135,7 @@ RAZORPAY_KEY_SECRET = '5Ktz63WjFVnzVBfhAXgNWCHR'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com'
