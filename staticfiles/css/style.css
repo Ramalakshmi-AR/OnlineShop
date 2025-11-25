@@ -7,6 +7,7 @@ body {
 header {
     background-color: #066077;
     color: #fff;
+    width: 100%;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -68,6 +69,7 @@ header nav a {
 
 footer {
     text-align: center;
+    width: 100%;
     padding: 15px;
     background-color: #066077;
     color: #fff;
@@ -109,4 +111,31 @@ footer {
 
 .cart-table th {
     background-color: #f2f2f2;
+}
+
+a{
+    text-decoration: none;
+    color:#066077;
+}.carousel-caption h3 {
+    animation: fadeText 2s ease-in-out;
+}
+
+@keyframes fadeText {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.nav-link:hover {
+    color: #f8d210 !important;
 }

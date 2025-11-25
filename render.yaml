@@ -2,7 +2,8 @@ services:
   - type: web
     name: onlineshop
     env: python
-    plan: free
-    region: singapore
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn OnlineShopping.wsgi:application"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn OnlineShop.wsgi"
+    envVars:
+      - key: DEBUG
+        value: False
