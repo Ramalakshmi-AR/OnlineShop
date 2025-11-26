@@ -1,11 +1,11 @@
-# shop/views.py
+
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category
 from django.conf import settings
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
 
-# Home page and search/filter
+
 def home(request):
     categories = Category.objects.all()
     products = Product.objects.all()
@@ -22,12 +22,17 @@ def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     return render(request, 'shop/product_detail.html', {'product': product})
 
-# Cart page (simple session cart)
 def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
     cart[product_id] = cart.get(product_id, 0) + 1
     request.session['cart'] = cart
+
+   
+    if request.GET.get('buy_now') == '1':
+        return redirect('checkout')
+
     return redirect('cart')
+
 
 def cart(request):
     cart = request.session.get('cart', {})
@@ -39,14 +44,45 @@ def cart(request):
         total += p.price * qty
     return render(request, 'shop/cart.html', {'products': products, 'total': total})
 
-# Razorpay payment
 def checkout(request):
     cart = request.session.get('cart', {})
-    total = sum(Product.objects.get(id=id).price * qty for id, qty in cart.items())
-    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-    payment = client.order.create({'amount': int(total*100), 'currency': 'INR', 'payment_capture': 1})
-    return render(request, 'shop/checkout.html', {'payment': payment, 'total': total, 'razorpay_key': settings.RAZORPAY_KEY_ID})
 
+    # If cart is empty
+    if not cart:
+        return redirect('cart')
+
+    # Calculate total
+    total = 0
+    for id, qty in cart.items():
+        p = Product.objects.get(id=id)
+        total += p.price * qty
+
+    # Razorpay requires minimum ₹1 (100 paise)
+    if total < 1:
+        return render(request, "shop/cart.html", {
+            "products": [
+                {'product': Product.objects.get(id=id), 'qty': qty} 
+                for id, qty in cart.items()
+            ],
+            "total": total,
+            "error": "Minimum order amount is ₹1 to proceed to payment."
+        })
+
+    # Create Razorpay order in paise
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    amount_paise = int(total * 100)  # convert Rs → paise
+
+    payment = client.order.create({
+        'amount': amount_paise,
+        'currency': 'INR',
+        'payment_capture': 1
+    })
+
+    return render(request, 'shop/checkout.html', {
+        'payment': payment,
+        'total': total,
+        'razorpay_key': settings.RAZORPAY_KEY_ID
+    })
 
 
 
